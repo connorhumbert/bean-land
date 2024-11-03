@@ -49,6 +49,7 @@ export class BeanCounterComponent {
     "Get to 100!",
     "Get to 100!",
   ];
+  
   displayedPhrase = 'Get to 100!';
   beans: string[] = [
      '/beans1.jpg',
@@ -73,8 +74,11 @@ export class BeanCounterComponent {
     this.beanCount++;
 
     if (this.beanCount === 100) {
+      window.open('https://www.youtube.com/watch?v=uSsvZe9Hw0c&ab_channel=JustPao13', '_blank');
+      return; 
+    } else if (this.beanCount == 200) {
       window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley', '_blank');
-      return; // Stop further execution if user has reached 100
+      return; 
     }
 
     // Show a random phrase and image every 5 beans
