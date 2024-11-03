@@ -26,7 +26,7 @@
   .bean-image {
     position: absolute;
     transition: opacity 0.5s ease-in-out;
-    animation: fadeOut 5s forwards; /* Fade out after 3 seconds */
+    animation: fadeOut 5s forwards; 
   }
   
   @keyframes fadeOut {
@@ -35,6 +35,6 @@
   }
   
   img {
-    width: 50px; /* Adjust as needed */
+    width: 200px; 
     height: auto;
   }

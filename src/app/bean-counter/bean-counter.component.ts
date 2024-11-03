@@ -35,7 +35,7 @@ export class BeanCounterComponent {
     "Who knew beans could be so exciting?",
     "Welcome to the bean party!",
     "Bean collector extraordinaire!",
-    "Bean whisperer, is that you?",
+    "Bean whisperer.",
     "Beans are your destiny!",
     "Your future: beans!",
     "Are you sure you’re not a bean hoarder?",
@@ -44,22 +44,46 @@ export class BeanCounterComponent {
     "You’ve unlocked Bean Power!",
     "Click. Count. Bean. Repeat.",
     "Bean-crazed and proud!",
+    "YEAAAAAAAAAAAAAAA",
+
+    //multiples
+    "Get to 100!",
+    "Get to 100!",
+    "Get to 100!",
   ];
-  displayedPhrase = '';
+  displayedPhrase = 'Get to 100!';
   beans: string[] = [
      '/beans1.jpg',
-     '/beans2.webp'
+     '/beans2.webp',
+     '/beans3.webp',
+     '/beans4.jpg',
+     '/beans5.jpg',
+     '/beans6.jpg',
+     '/beans7.jpeg',
+     '/beans8.jpg',
+     '/beans9.jpeg',
+     '/beans10.jpg',
+     '/beans11.webp',
+     '/beans12.jpg',
+     '/beans13.jpg',
+     '/beans14.webp',
+     '/mr-bean.jpg'
   ];
   displayedBeans: BeanImage[] = [];
 
   incrementBeans() {
     this.beanCount++;
 
+    if (this.beanCount === 100) {
+      window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley', '_blank');
+      return; // Stop further execution if user has reached 100
+    }
+
     // Show a random phrase and image every 5 beans
     if (this.beanCount % 5 === 0) {
       const randomIndex = Math.floor(Math.random() * this.beans.length);
-      const randomTop = Math.random() * 80; // Adjust as needed for screen height
-      const randomLeft = Math.random() * 80; // Adjust as needed for screen width
+      const randomTop = Math.random() * 80; 
+      const randomLeft = Math.random() * 80; 
       
       // Display a random phrase
       const phraseIndex = Math.floor(Math.random() * this.randomPhrases.length);

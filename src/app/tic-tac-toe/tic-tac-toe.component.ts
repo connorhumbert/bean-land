@@ -10,8 +10,8 @@ import { Component } from '@angular/core';
 })
 export class TicTacToeComponent {
   board: (string | null)[] = Array(9).fill(null);
-  playerIcon = '/beans1.jpg';  
-  opponentIcon = 'beans2.jpg'
+  playerIcon = '/coffee_bean.avif';  
+  opponentIcon = '/single_kidney_bean.jpg'
   isPlayerTurn = true;
   winner: string | null = null;
   isGameOver = false;
@@ -25,23 +25,57 @@ export class TicTacToeComponent {
     this.checkWinner();
 
     if (!this.isGameOver) {
-      setTimeout(() => this.programMove(), 300);  // Delay to simulate the program's turn
+      setTimeout(() => this.programMove(), 500);  // Delay to simulate the program's turn
     }
   }
 
-  // Method for the program's random move
+  // Method for the program's intelligent move
   programMove(): void {
-    const availableSpots = this.board
-      .map((cell, idx) => (cell === null ? idx : null))
-      .filter((idx) => idx !== null) as number[];
+    if (this.isGameOver) return;
 
-    if (availableSpots.length > 0) {
-      const randomIndex = Math.floor(Math.random() * availableSpots.length);
-      const moveIndex = availableSpots[randomIndex];
-      this.board[moveIndex] = 'O';
+    // Try to win or block
+    let move = this.findWinningMove('O') || this.findWinningMove('X');
+    
+    // Take the center if available
+    if (move === null && this.board[4] === null) {
+      move = 4;
+    }
+
+    // Otherwise, take a random move
+    if (move === null) {
+      const availableSpots = this.board
+        .map((cell, idx) => (cell === null ? idx : null))
+        .filter((idx) => idx !== null) as number[];
+      
+      move = availableSpots[Math.floor(Math.random() * availableSpots.length)];
+    }
+
+    // Place the move and check for a winner
+    if (move !== null) {
+      this.board[move] = 'O';
       this.checkWinner();
       this.isPlayerTurn = true;
     }
+  }
+
+  // Helper function to find a winning or blocking move
+  findWinningMove(player: string): number | null {
+    const winningCombinations = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],  // Rows
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],  // Columns
+      [0, 4, 8], [2, 4, 6]              // Diagonals
+    ];
+
+    for (const [a, b, c] of winningCombinations) {
+      const line = [this.board[a], this.board[b], this.board[c]];
+      const emptyIndex = line.indexOf(null);
+
+      if (line.filter(cell => cell === player).length === 2 && emptyIndex !== -1) {
+        return [a, b, c][emptyIndex];
+      }
+    }
+
+    return null;
   }
 
   // Check for winner or draw

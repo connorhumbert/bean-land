@@ -8,7 +8,7 @@
       [ngClass]="{'player': cell === 'X', 'program': cell === 'O'}"
     >
       <img *ngIf="cell === 'X'" [src]="playerIcon" alt="Player Icon" />
-      <span *ngIf="cell === 'O'">O</span>
+      <img *ngIf="cell === 'O'" [src]="opponentIcon" alt="Opponent Icon" />
     </div>
   </div>
   <p *ngIf="winner" class="result">
