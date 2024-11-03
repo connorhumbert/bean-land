@@ -1,0 +1,10 @@
+<div class="container">
+    <h1>Bean Counter</h1>
+    <p>Number of Beans: {{ beanCount }}</p>
+    <button (click)="incrementBeans()">Add a Bean</button>
+    <p class="phrase">{{ displayedPhrase }}</p>
+  
+    <div class="bean-image" *ngIf="showBean">
+      <img [src]="currentBean" alt="Bean" />
+    </div>
+  </div>
