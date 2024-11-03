@@ -21,7 +21,6 @@ export class BeanCounterComponent {
     "Keep counting those beans!",
     "Beans for days!",
     "Aren't you the bean master?",
-    "This is quite the bean journey!",
     "Girl! You deserve a bean!",
     "BEANS! BEANS! BEANS!",
     "Bean there, done that!",
@@ -42,7 +41,6 @@ export class BeanCounterComponent {
     "They said it couldn’t be done. They were wrong.",
     "Next stop: Bean World!",
     "You’ve unlocked Bean Power!",
-    "Click. Count. Bean. Repeat.",
     "Bean-crazed and proud!",
     "YEAAAAAAAAAAAAAAA",
 
