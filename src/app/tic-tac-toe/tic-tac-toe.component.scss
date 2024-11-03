@@ -1,0 +1,46 @@
+.container {
+    text-align: center;
+  }
+  
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 5px;
+    margin: 20px auto;
+    width: max-content;
+  }
+  
+  .cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f3f3;
+    border: 1px solid #ddd;
+    font-size: 2em;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .cell img {
+    width: 80%;
+    height: 80%;
+  }
+  
+  .player {
+    background-color: #d9f7be;
+  }
+  
+  .program {
+    background-color: #ffd3d3;
+  }
+  
+  .result {
+    font-size: 1.5em;
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 1em;
+  }
