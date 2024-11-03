@@ -4,7 +4,7 @@
     <button (click)="incrementBeans()">Add a Bean</button>
     <p class="phrase">{{ displayedPhrase }}</p>
   
-    <div class="bean-image" *ngIf="showBean">
-      <img [src]="currentBean" />
+    <div class="bean-image" *ngFor="let bean of displayedBeans" [style.top.%]="bean.top" [style.left.%]="bean.left">
+      <img [src]="bean.src" />
     </div>
   </div>

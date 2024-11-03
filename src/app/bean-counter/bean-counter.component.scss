@@ -24,12 +24,17 @@
   }
   
   .bean-image {
-    margin-top: 20px;
-    opacity: 1;
-    transition: opacity 2s ease-out; /* Transition for fade effect */
+    position: absolute;
+    transition: opacity 0.5s ease-in-out;
+    animation: fadeOut 5s forwards; /* Fade out after 3 seconds */
   }
   
-  .bean-image img {
-    width: 300px; /* Adjust size as needed */
+  @keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  
+  img {
+    width: 50px; /* Adjust as needed */
     height: auto;
   }
