@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import confetti from 'canvas-confetti';
 
 @Component({
   selector: 'app-tic-tac-toe',
@@ -90,6 +91,10 @@ export class TicTacToeComponent {
       if (this.board[a] && this.board[a] === this.board[b] && this.board[a] === this.board[c]) {
         this.winner = this.board[a];
         this.isGameOver = true;
+        // Check if the winner is the player (X)
+        if (this.winner === 'X') {
+          this.triggerConfetti(); // Trigger confetti if player wins
+        } 
         return;
       }
     }
@@ -98,6 +103,28 @@ export class TicTacToeComponent {
       this.winner = 'Draw';
       this.isGameOver = true;
     }
+  }
+
+  triggerConfetti() {
+    const duration = 2 * 1000;
+    const animationEnd = Date.now() + duration;
+    const colors = ['#bb0000', '#ffffff', '#00ff00'];
+
+    const interval = setInterval(() => {
+      const timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+      }
+
+      confetti({
+        particleCount: 100,
+        startVelocity: 30,
+        spread: 360,
+        origin: { x: Math.random(), y: Math.random() - 0.2 },
+        colors: colors
+      });
+    }, 250);
   }
 
   // Reset the game
