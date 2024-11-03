@@ -7,22 +7,22 @@ import confetti from 'canvas-confetti';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './tic-tac-toe.component.html',
-  styleUrl: './tic-tac-toe.component.scss'
+  styleUrls: ['./tic-tac-toe.component.scss']
 })
 export class TicTacToeComponent {
   board: (string | null)[] = Array(9).fill(null);
   playerIcon = '/coffee_bean.avif';  
-  opponentIcon = '/single_kidney_bean.jpg'
-  isPlayerTurn = true;
+  opponentIcon = '/single_kidney_bean.jpg';
+  isPlayerTurn = true; // Track whether it's the player's turn
   winner: string | null = null;
   isGameOver = false;
 
   // Method to handle player move
   playerMove(index: number): void {
-    if (this.board[index] || this.isGameOver) return;
+    if (!this.isPlayerTurn || this.board[index] || this.isGameOver) return;
 
     this.board[index] = 'X';  // Player's move
-    this.isPlayerTurn = false;
+    this.isPlayerTurn = false; // Set to false to prevent further clicks
     this.checkWinner();
 
     if (!this.isGameOver) {
@@ -55,7 +55,7 @@ export class TicTacToeComponent {
     if (move !== null) {
       this.board[move] = 'O';
       this.checkWinner();
-      this.isPlayerTurn = true;
+      this.isPlayerTurn = true; // Now it's the player's turn again
     }
   }
 
@@ -91,10 +91,11 @@ export class TicTacToeComponent {
       if (this.board[a] && this.board[a] === this.board[b] && this.board[a] === this.board[c]) {
         this.winner = this.board[a];
         this.isGameOver = true;
+
         // Check if the winner is the player (X)
         if (this.winner === 'X') {
           this.triggerConfetti(); // Trigger confetti if player wins
-        } 
+        }
         return;
       }
     }
@@ -106,7 +107,7 @@ export class TicTacToeComponent {
   }
 
   triggerConfetti() {
-    const duration = 2 * 1000;
+    const duration = 2 * 2000;
     const animationEnd = Date.now() + duration;
     const colors = ['#bb0000', '#ffffff', '#00ff00'];
 
@@ -118,7 +119,7 @@ export class TicTacToeComponent {
       }
 
       confetti({
-        particleCount: 100,
+        particleCount: 200,
         startVelocity: 30,
         spread: 360,
         origin: { x: Math.random(), y: Math.random() - 0.2 },
