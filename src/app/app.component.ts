@@ -16,8 +16,11 @@ export class AppComponent {
   showCongratsModal = false;
 
   onBeanCountReached(count: number) {
-    if (count === 10) {
+    if (count === 100) {
       this.showCongratsModal = true; // Show modal when count reaches 100
+      setTimeout(() => {
+        this.showCongratsModal = false;
+      }, 15000); // 15000 ms = 15 seconds
     }
   }
 

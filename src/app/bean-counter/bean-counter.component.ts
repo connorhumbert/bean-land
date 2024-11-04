@@ -48,7 +48,6 @@ export class BeanCounterComponent {
     //multiples
     "Get to 100!",
     "Get to 100!",
-    "Get to 100!",
   ];
 
   displayedPhrase = 'Get to 100!';
@@ -74,7 +73,7 @@ export class BeanCounterComponent {
   incrementBeans() {
     this.beanCount++;
 
-    if (this.beanCount === 10) {
+    if (this.beanCount === 100) {
       this.beanCountReached.emit(this.beanCount);
       return; 
     }  else if (this.beanCount === 200) {

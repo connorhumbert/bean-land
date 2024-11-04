@@ -54,7 +54,7 @@
     }
     100% {
       opacity: 1;
-      margin-top: -200px;
+      margin-top: -100px;
     }
   }
   
@@ -127,7 +127,7 @@
   
   .year {
     position: absolute;
-    top: 450px;
+    top: 350px;
     width: 100%;
     text-align: center;
   }
@@ -136,7 +136,7 @@
     font-size: 50px;
     font-weight: 700;
     font-family: "Poppins", sans-serif;
-    letter-spacing: -12px;
+    letter-spacing: 10px; /* Adjusted to give more room */
   }
   
   .first_year {
@@ -145,23 +145,23 @@
   
   .new {
     position: absolute;
-    right: -10px;
+    right: 10px;
     animation: new_animation 5s ease-in-out 1.5s forwards;
   }
   
   @keyframes new_animation {
     0% {
-      right: -100px;
+        right: 100px;
     }
     40% {
-      right: 635px;
+        right: 500px; /* Adjusted to stop earlier */
     }
     90% {
-      right: 635px;
+        right: 500px;
     }
     100% {
-      right: 735px;
-      color: yellow;
+        right: 600px; /* Adjusted to stop a bit earlier */
+        color: yellow;
     }
   }
   
@@ -308,19 +308,19 @@
   }
   
   #firework1 {
-      left: 25%;
-      top: 50%;
+      left: 0%;
+      top: 5%;
       transform: scale(1);
   }
   
   #firework2 {
-      left: 50%;
-      top: 75%;
+      left: 20%;
+      top: 10%;
       transform: scale(0.5);
   }
   
   #firework3 {
-      left: 80%;
-      top: 15%;
+      left: 40%;
+      top: 20%;
       transform: scale(1.5);
   }
