@@ -73,7 +73,7 @@ export class BeanCounterComponent {
   incrementBeans() {
     this.beanCount++;
 
-    if (this.beanCount === 100) {
+    if (this.beanCount === 10) {
       this.beanCountReached.emit(this.beanCount);
       return; 
     }  else if (this.beanCount === 200) {
