@@ -1,5 +1,62 @@
 <router-outlet />
 <div class="bean-counter-component-wrapper">
-  <app-bean-counter></app-bean-counter>
+  <app-bean-counter (beanCountReached)="onBeanCountReached($event)"></app-bean-counter>
 </div>
 <app-tic-tac-toe></app-tic-tac-toe>
+
+<!-- Modal for Congratulations Message -->
+<div *ngIf="showCongratsModal" class="congrats-modal">
+  <div class="msg">Congratulations!</div>
+  <div class="year">
+      <span class="first_year">
+          <span class="y1"></span>
+          <span class="y2"></span>
+          <span class="y3"></span>
+      </span>
+      <span class="old"></span>
+      <span class="y4 new">Bean Queen</span>
+      <div class="balloon"></div>
+  </div>
+  <div class="firework" id="firework1">
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+  </div>
+  <div class="firework" id="firework2">
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+  </div>
+  <div class="firework" id="firework3">
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+      <div class="cracker"></div>
+  </div>
+</div>

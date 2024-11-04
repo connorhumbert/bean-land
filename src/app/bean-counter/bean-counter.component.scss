@@ -13,7 +13,7 @@
     border: none;
     border-radius: 5px;
     position: relative;
-    z-index: 2; // Set a higher z-index for the button
+    z-index: 2; 
   }
   
   button:hover {
@@ -24,12 +24,14 @@
     margin-top: 20px;
     font-size: 20px;
     color: #555;
+    position: relative; 
+    z-index: 2;
   }
   
   .bean-image {
     position: absolute;
-    transition: opacity 0.5s ease-in-out;
-    animation: fadeOut 5s forwards; 
+    transition: opacity 0.4s ease-in-out;
+    animation: fadeOut 4s forwards; 
     z-index: 1;
   }
   

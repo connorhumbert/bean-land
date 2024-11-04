@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface BeanImage {
@@ -15,6 +15,7 @@ interface BeanImage {
   styleUrls: ['./bean-counter.component.scss']
 })
 export class BeanCounterComponent {
+  @Output() beanCountReached = new EventEmitter<number>();
   beanCount = 0;
   randomPhrases: string[] = [
     "You’re on a roll!",
@@ -49,7 +50,7 @@ export class BeanCounterComponent {
     "Get to 100!",
     "Get to 100!",
   ];
-  
+
   displayedPhrase = 'Get to 100!';
   beans: string[] = [
      '/beans1.jpg',
@@ -73,10 +74,16 @@ export class BeanCounterComponent {
   incrementBeans() {
     this.beanCount++;
 
-    if (this.beanCount === 100) {
+    if (this.beanCount === 10) {
+      this.beanCountReached.emit(this.beanCount);
+      return; 
+    }  else if (this.beanCount === 200) {
+      window.open('https://www.youtube.com/watch?v=vSJCuu29rZs&ab_channel=BBC', '_blank');
+      return; 
+    } else if (this.beanCount === 300) {
       window.open('https://www.youtube.com/watch?v=uSsvZe9Hw0c&ab_channel=JustPao13', '_blank');
       return; 
-    } else if (this.beanCount == 200) {
+    } else if (this.beanCount == 400) {
       window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley', '_blank');
       return; 
     }

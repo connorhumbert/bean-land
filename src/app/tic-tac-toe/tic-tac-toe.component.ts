@@ -16,12 +16,13 @@ export class TicTacToeComponent {
   isPlayerTurn = true; // Track whether it's the player's turn
   winner: string | null = null;
   isGameOver = false;
+  PLAYER: string = 'Player'
+  OPPONENT: string = 'Opponent'
 
-  // Method to handle player move
   playerMove(index: number): void {
     if (!this.isPlayerTurn || this.board[index] || this.isGameOver) return;
 
-    this.board[index] = 'X';  // Player's move
+    this.board[index] = this.PLAYER;  // Player's move
     this.isPlayerTurn = false; // Set to false to prevent further clicks
     this.checkWinner();
 
@@ -35,7 +36,7 @@ export class TicTacToeComponent {
     if (this.isGameOver) return;
 
     // Try to win or block
-    let move = this.findWinningMove('O') || this.findWinningMove('X');
+    let move = this.findWinningMove(this.OPPONENT) || this.findWinningMove(this.PLAYER);
     
     // Take the center if available
     if (move === null && this.board[4] === null) {
@@ -53,9 +54,9 @@ export class TicTacToeComponent {
 
     // Place the move and check for a winner
     if (move !== null) {
-      this.board[move] = 'O';
+      this.board[move] = this.OPPONENT;
       this.checkWinner();
-      this.isPlayerTurn = true; // Now it's the player's turn again
+      this.isPlayerTurn = true; 
     }
   }
 
@@ -92,8 +93,8 @@ export class TicTacToeComponent {
         this.winner = this.board[a];
         this.isGameOver = true;
 
-        // Check if the winner is the player (X)
-        if (this.winner === 'X') {
+
+        if (this.winner === this.PLAYER) {
           this.triggerConfetti(); // Trigger confetti if player wins
         }
         return;
