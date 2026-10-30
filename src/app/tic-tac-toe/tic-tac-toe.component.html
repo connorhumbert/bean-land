@@ -1,19 +1,31 @@
-  <div class="container">
-    <h1>Bean Bac Boe</h1>
-    <div class="board">
-      <div
-        class="cell"
-        *ngFor="let cell of board; let i = index"
-        (click)="playerMove(i)"
-        [ngClass]="{'player': cell === this.PLAYER, 'program': cell === this.OPPONENT}"
-        [class.disabled]="!isPlayerTurn"  
-      >
-        <img *ngIf="cell === this.PLAYER" [src]="playerIcon" alt="Player Icon" />
-        <img *ngIf="cell === this.OPPONENT" [src]="opponentIcon" alt="Opponent Icon" />
-      </div>
-    </div>
-    <p *ngIf="winner" class="result">
-      {{ winner === 'Draw' ? 'It\'s a Draw!' : (winner + ' Wins!') }}
-    </p>
-    <button (click)="resetGame()">Reset Game</button>
+<section class="card game">
+  <h2 class="card-title">Bean Bac Boe</h2>
+
+  <div class="scoreboard">
+    <div class="score"><img [src]="playerIcon" alt="" /><span>You</span><strong>{{ score().you }}</strong></div>
+    <div class="score"><span>Draws</span><strong>{{ score().draws }}</strong></div>
+    <div class="score"><img [src]="opponentIcon" alt="" /><span>Kidney</span><strong>{{ score().bean }}</strong></div>
   </div>
+
+  <div class="opponent">
+    <img class="opponent-avatar" [src]="opponentIcon" alt="Kidney bean" [class.thinking]="!isPlayerTurn && !isGameOver" />
+    <p class="taunt" aria-live="polite">{{ taunt }}</p>
+  </div>
+
+  <div class="board">
+    <button
+      class="cell"
+      *ngFor="let cell of board; let i = index"
+      (click)="playerMove(i)"
+      [ngClass]="{'player': cell === this.PLAYER, 'program': cell === this.OPPONENT, 'win': winningLine.includes(i)}"
+      [class.disabled]="!isPlayerTurn || isGameOver"
+      [attr.aria-label]="cell ? (cell === PLAYER ? 'Coffee bean' : 'Kidney bean') : 'Empty square ' + (i + 1)"
+    >
+      <img *ngIf="cell === this.PLAYER" [src]="playerIcon" alt="" />
+      <img *ngIf="cell === this.OPPONENT" [src]="opponentIcon" alt="" />
+    </button>
+  </div>
+
+  <p class="result" [class.visible]="winner">{{ winner ? resultText : '' }}</p>
+  <button class="btn" (click)="resetGame()">{{ isGameOver ? 'Play again' : 'Reset game' }}</button>
+</section>

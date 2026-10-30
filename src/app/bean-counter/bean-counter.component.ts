@@ -1,22 +1,54 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Output, EventEmitter, afterNextRender, computed, inject, signal } from '@angular/core';
+import { BeanStorage, isBeanCount } from '../bean-storage';
 
 interface BeanImage {
+  id: number;
   src: string;
   top: number;
   left: number;
+  rotate: number;
 }
+
+interface BeanPop {
+  id: number;
+  x: string;
+}
+
+interface Phrase {
+  id: number;
+  text: string;
+}
+
+const MILESTONES = [100, 200, 300, 400];
+const COUNT_KEY = 'count';
 
 @Component({
   selector: 'app-bean-counter',
   standalone: true,
-  imports: [CommonModule],
   templateUrl: './bean-counter.component.html',
   styleUrls: ['./bean-counter.component.scss']
 })
 export class BeanCounterComponent {
   @Output() beanCountReached = new EventEmitter<number>();
-  beanCount = 0;
+  private storage = inject(BeanStorage);
+  private nextId = 0;
+
+  beanCount = signal(0);
+
+  nextMilestone = computed(() => MILESTONES.find((m) => m > this.beanCount()) ?? null);
+
+  progress = computed(() => {
+    const next = this.nextMilestone();
+    if (next === null) return 100;
+    const previous = MILESTONES[MILESTONES.indexOf(next) - 1] ?? 0;
+    return ((this.beanCount() - previous) / (next - previous)) * 100;
+  });
+
+  milestoneNudge = computed(() => {
+    const next = this.nextMilestone();
+    return next === null ? 'Bean-finity and beyond!' : `Get to ${next}!`;
+  });
+
   randomPhrases: string[] = [
     "You’re on a roll!",
     "Keep counting those beans!",
@@ -44,13 +76,11 @@ export class BeanCounterComponent {
     "You’ve unlocked Bean Power!",
     "Bean-crazed and proud!",
     "YEAAAAAAAAAAAAAAA",
-
-    //multiples
-    "Get to 100!",
-    "Get to 100!",
   ];
 
-  displayedPhrase = 'Get to 100!';
+  // Kept as a one-item list so the bubble re-animates whenever the phrase changes
+  phrase = signal<Phrase[]>([{ id: 0, text: this.milestoneNudge() }]);
+
   beans: string[] = [
      '/beans1.jpg',
      '/beans2.webp',
@@ -68,46 +98,67 @@ export class BeanCounterComponent {
      '/beans14.webp',
      '/mr-bean.jpg'
   ];
-  displayedBeans: BeanImage[] = [];
+  displayedBeans = signal<BeanImage[]>([]);
+  pops = signal<BeanPop[]>([]);
+
+  constructor() {
+    // Read saved beans only in the browser, after hydration
+    afterNextRender(() => {
+      this.beanCount.set(this.storage.load(COUNT_KEY, 0, isBeanCount));
+      this.phrase.set([{ id: this.nextId++, text: this.milestoneNudge() }]);
+    });
+  }
 
   incrementBeans() {
-    this.beanCount++;
+    this.beanCount.update((count) => count + 1);
+    const count = this.beanCount();
+    this.storage.save(COUNT_KEY, count);
+    this.spawnPop();
 
-    if (this.beanCount === 100) {
-      this.beanCountReached.emit(this.beanCount);
-      return; 
-    }  else if (this.beanCount === 200) {
+    if (count === 100) {
+      this.beanCountReached.emit(count);
+      return;
+    } else if (count === 200) {
       window.open('https://www.youtube.com/watch?v=vSJCuu29rZs&ab_channel=BBC', '_blank');
-      return; 
-    } else if (this.beanCount === 300) {
+      return;
+    } else if (count === 300) {
       window.open('https://www.youtube.com/watch?v=uSsvZe9Hw0c&ab_channel=JustPao13', '_blank');
-      return; 
-    } else if (this.beanCount == 400) {
+      return;
+    } else if (count === 400) {
       window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley', '_blank');
-      return; 
+      return;
     }
 
     // Show a random phrase and image every 5 beans
-    if (this.beanCount % 5 === 0) {
-      const randomIndex = Math.floor(Math.random() * this.beans.length);
-      const randomTop = Math.random() * 80; 
-      const randomLeft = Math.random() * 80; 
-      
-      // Display a random phrase
-      const phraseIndex = Math.floor(Math.random() * this.randomPhrases.length);
-      this.displayedPhrase = this.randomPhrases[phraseIndex];
-      
-      // Add the bean image with random position
-      this.displayedBeans.push({
-        src: this.beans[randomIndex],
-        top: randomTop,
-        left: randomLeft
-      });
+    if (count % 5 === 0) {
+      // The milestone nudge is listed twice so it shows up more often
+      const nudge = this.milestoneNudge();
+      const phrases = [...this.randomPhrases, nudge, nudge];
+      const phraseIndex = Math.floor(Math.random() * phrases.length);
+      this.phrase.set([{ id: this.nextId++, text: phrases[phraseIndex] }]);
 
-      // Remove the bean image after 3 seconds
+      const bean: BeanImage = {
+        id: this.nextId++,
+        src: this.beans[Math.floor(Math.random() * this.beans.length)],
+        top: 5 + Math.random() * 60,
+        left: Math.random() * 65,
+        rotate: Math.random() * 24 - 12
+      };
+      this.displayedBeans.update((beans) => [...beans, bean]);
+
+      // Remove the bean image after 5 seconds
       setTimeout(() => {
-        this.displayedBeans.shift();
+        this.displayedBeans.update((beans) => beans.filter((b) => b.id !== bean.id));
       }, 5000);
     }
+  }
+
+  removePop(id: number) {
+    this.pops.update((pops) => pops.filter((p) => p.id !== id));
+  }
+
+  private spawnPop() {
+    const pop = { id: this.nextId++, x: `${Math.round(Math.random() * 80 - 40)}px` };
+    this.pops.update((pops) => [...pops, pop]);
   }
 }

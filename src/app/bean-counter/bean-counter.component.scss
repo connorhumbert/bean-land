@@ -1,46 +1,183 @@
-.container {
-    text-align: center;
-    margin: 20px;
-    position: relative;
+:host {
+  display: block;
+}
+
+.counter {
+  text-align: center;
+  height: 100%;
+}
+
+.count {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 14vw, 6rem);
+  font-weight: 700;
+  line-height: 1;
+  margin-top: 16px;
+  color: var(--espresso);
+  font-variant-numeric: tabular-nums;
+}
+
+.count-label {
+  color: var(--mocha);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  margin-top: 4px;
+}
+
+.progress {
+  margin: 20px auto 6px;
+  max-width: 280px;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--foam);
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(59, 36, 24, 0.12);
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--caramel), var(--berry));
+  transition: width 250ms ease-out;
+}
+
+.progress-label {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--mocha);
+}
+
+.button-wrap {
+  position: relative;
+  display: inline-block;
+  margin-top: 24px;
+}
+
+.bean-button {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  color: var(--cream);
+  background: radial-gradient(circle at 35% 30%, #8a5a3c, var(--espresso) 70%);
+  box-shadow: 0 10px 0 #24150e, 0 18px 30px -10px rgba(59, 36, 24, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: transform 80ms ease, box-shadow 80ms ease;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+
+  &:hover .bean-button-emoji {
+    transform: rotate(-12deg) scale(1.1);
   }
-  
-  button {
-    padding: 10px 20px;
-    font-size: 18px;
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    position: relative;
-    z-index: 2; 
+
+  &:active {
+    transform: translateY(8px);
+    box-shadow: 0 2px 0 #24150e, 0 8px 16px -8px rgba(59, 36, 24, 0.6);
   }
-  
-  button:hover {
-    background-color: #45a049;
+}
+
+.bean-button-emoji {
+  font-size: 2.6rem;
+  transition: transform 150ms ease;
+}
+
+.pop {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  font-size: 1.6rem;
+  pointer-events: none;
+  animation: pop 700ms ease-out forwards;
+}
+
+@keyframes pop {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(0.6);
   }
-  
-  .phrase {
-    margin-top: 20px;
-    font-size: 20px;
-    color: #555;
-    position: relative; 
-    z-index: 2;
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--x)), -90px) scale(1.2) rotate(40deg);
   }
-  
-  .bean-image {
+}
+
+.phrase {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  position: relative;
+  margin: 28px auto 0;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  background: var(--foam);
+  color: var(--mocha);
+  font-weight: 800;
+  animation: bubble 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  &::before {
+    content: '';
     position: absolute;
-    transition: opacity 0.4s ease-in-out;
-    animation: fadeOut 4s forwards; 
-    z-index: 1;
+    top: -8px;
+    left: 50%;
+    margin-left: -8px;
+    border: 8px solid transparent;
+    border-top: 0;
+    border-bottom-color: var(--foam);
   }
-  
-  @keyframes fadeOut {
-    0% { opacity: 1; }
-    100% { opacity: 0; }
+}
+
+@keyframes bubble {
+  from {
+    opacity: 0;
+    transform: scale(0.7) translateY(6px);
   }
-  
+}
+
+.polaroid {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+  width: clamp(120px, 30vw, 200px);
+  padding: 8px 8px 28px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 14px 30px -10px rgba(59, 36, 24, 0.5);
+  transform: rotate(var(--rotate));
+  animation: polaroid 5s ease-in-out forwards;
+
   img {
-    width: 200px; 
-    height: auto;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 3px;
   }
+}
+
+@keyframes polaroid {
+  0% {
+    opacity: 0;
+    transform: rotate(var(--rotate)) scale(0.6);
+  }
+  10% {
+    opacity: 1;
+    transform: rotate(var(--rotate)) scale(1);
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--rotate)) translateY(20px) scale(0.95);
+  }
+}

@@ -1,1 +1,112 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --cream: #fff8ee;
+  --paper: #fffdf9;
+  --latte: #e9d5b7;
+  --foam: #f5ead9;
+  --caramel: #c98a4b;
+  --espresso: #3b2418;
+  --mocha: #6b4430;
+  --berry: #e0607e;
+  --sage: #9bb88a;
+
+  --radius: 24px;
+  --radius-sm: 14px;
+  --shadow: 0 18px 40px -20px rgba(59, 36, 24, 0.35), 0 2px 6px rgba(59, 36, 24, 0.06);
+  --shadow-sm: 0 6px 14px -8px rgba(59, 36, 24, 0.4);
+
+  --font-display: 'Fredoka', 'Nunito', system-ui, sans-serif;
+  --font-body: 'Nunito', system-ui, -apple-system, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  color: var(--espresso);
+  background-color: var(--cream);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='%233B2418' fill-opacity='0.045'%3E%3Cellipse cx='24' cy='24' rx='9' ry='13' transform='rotate(30 24 24)'/%3E%3Cellipse cx='72' cy='72' rx='9' ry='13' transform='rotate(-35 72 72)'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  margin: 0;
+}
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--latte);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(20px, 4vw, 32px);
+}
+
+.card-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--espresso);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+}
+
+.btn {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75em 1.6em;
+  border: none;
+  border-radius: 999px;
+  background: var(--espresso);
+  color: var(--cream);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 120ms ease, background-color 160ms ease;
+
+  &:hover {
+    background: var(--mocha);
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+
+  &.btn-ghost {
+    background: transparent;
+    color: var(--mocha);
+    box-shadow: inset 0 0 0 2px var(--latte);
+
+    &:hover {
+      background: var(--foam);
+    }
+  }
+}
+
+button:focus-visible,
+[role='button']:focus-visible {
+  outline: 3px solid var(--caramel);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

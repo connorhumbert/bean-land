@@ -1,0 +1,29 @@
+<section class="card fortune-card">
+  <h2 class="card-title">Bean Fortune</h2>
+  <p class="hint">
+    @if (fortune()) {
+      Everyone gets the same fortune today.
+    } @else {
+      Tap the jar to reveal today's fortune.
+    }
+  </p>
+
+  <button class="jar" [class.shaking]="shaking()" (click)="revealDaily()"
+          aria-label="Shake the bean jar">
+    <span class="lid"></span>
+    <span class="glass">
+      <span>🫘</span><span>🫘</span><span>🫘</span><span>🫘</span><span>🫘</span><span>🫘</span><span>🫘</span>
+    </span>
+  </button>
+
+  @if (fortune(); as f) {
+    <div class="slip" aria-live="polite">
+      <span class="slip-label">Today's fortune</span>
+      <p class="slip-text">“{{ f.text }}”</p>
+      <div class="lucky">
+        <span>Lucky bean: <strong>{{ f.luckyBean }}</strong></span>
+        <span>Lucky number: <strong>{{ f.luckyNumber }}</strong></span>
+      </div>
+    </div>
+  }
+</section>

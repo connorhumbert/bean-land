@@ -1,64 +1,41 @@
-<router-outlet />
-<div class="bean-counter-component-wrapper">
+<header class="site-header">
+  <h1 class="wordmark"><span aria-hidden="true">☕</span> Bean Land</h1>
+</header>
+
+<main class="grid">
   <app-bean-counter (beanCountReached)="onBeanCountReached($event)"></app-bean-counter>
-</div>
-<app-tic-tac-toe></app-tic-tac-toe>
+  <app-bean-fortune></app-bean-fortune>
+  <app-tic-tac-toe></app-tic-tac-toe>
+</main>
+
+<footer class="site-footer">
+  <p>No beans were harmed. Some were counted.</p>
+  <button class="link-button" (click)="resetBeans()">Reset my beans</button>
+</footer>
 
 <!-- Modal for Congratulations Message -->
-<div *ngIf="showCongratsModal" class="congrats-modal">
-  <div class="msg">Congratulations! You are the Queen of Beans</div>
-  <div class="year">
-      <span class="first_year">
-          <span class="y1"></span>
-          <span class="y2"></span>
-          <span class="y3"></span>
-      </span>
-      <span class="old"></span>
-      <span class="y4 new">BEANS!</span>
-      <div class="balloon"></div>
-  </div>
+@if (showCongratsModal) {
+  <div class="celebration" (click)="closeModal()" role="dialog" aria-modal="true" aria-labelledby="celebration-title">
+    <div class="rain" aria-hidden="true">
+      @for (drop of rain; track $index) {
+        <span class="drop"
+              [style.left.%]="drop.x"
+              [style.animation-delay.s]="drop.delay"
+              [style.animation-duration.s]="drop.duration"
+              [style.font-size.rem]="drop.size">🫘</span>
+      }
+    </div>
 
-
-  <div class="firework" id="firework1">
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
+    <div class="celebration-card" (click)="$event.stopPropagation()">
+      <div class="crown" aria-hidden="true">👑</div>
+      <p class="congrats">Congratulations! You are the</p>
+      <h2 id="celebration-title" class="queen">
+        @for (letter of queenLetters; track $index) {
+          <span [style.animation-delay.ms]="400 + $index * 70">{{ letter }}</span>
+        }
+      </h2>
+      <p class="sub">100 beans. Absolutely legendary.</p>
+      <button class="btn" (click)="closeModal()">Continue counting</button>
+    </div>
   </div>
-  <div class="firework" id="firework2">
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-  </div>
-  <div class="firework" id="firework3">
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-      <div class="cracker"></div>
-  </div>
-</div>
+}

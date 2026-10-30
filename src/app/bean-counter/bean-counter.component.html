@@ -1,11 +1,39 @@
-<div class="container">
-    <h1>Bean Counter</h1>
-    <p>Number of Beans: {{ beanCount }}</p>
-    <button (click)="incrementBeans()">Add a Bean</button>
-    <p class="phrase">{{ displayedPhrase }}</p>
-  
-    <div class="bean-image" *ngFor="let bean of displayedBeans" [style.top.%]="bean.top" [style.left.%]="bean.left">
-      <img [src]="bean.src" />
-    </div>
+<section class="card counter">
+  <h2 class="card-title">Bean Counter</h2>
+
+  <div class="count" aria-live="polite">{{ beanCount() }}</div>
+  <div class="count-label">beans counted</div>
+
+  <div class="progress" role="progressbar" aria-label="Progress to next milestone"
+       [attr.aria-valuenow]="beanCount()" aria-valuemin="0" [attr.aria-valuemax]="nextMilestone() ?? beanCount()">
+    <div class="progress-fill" [style.width.%]="progress()"></div>
+  </div>
+  <p class="progress-label">
+    @if (nextMilestone(); as next) {
+      <strong>{{ next - beanCount() }}</strong> to go until {{ next }}
+    } @else {
+      You have transcended beans. 🌌
+    }
+  </p>
+
+  <div class="button-wrap">
+    <button class="bean-button" (click)="incrementBeans()">
+      <span class="bean-button-emoji" aria-hidden="true">🫘</span>
+      <span>Add a Bean</span>
+    </button>
+    @for (pop of pops(); track pop.id) {
+      <span class="pop" aria-hidden="true" [style.--x]="pop.x" (animationend)="removePop(pop.id)">🫘</span>
+    }
   </div>
 
+  @for (p of phrase(); track p.id) {
+    <p class="phrase">{{ p.text }}</p>
+  }
+</section>
+
+@for (bean of displayedBeans(); track bean.id) {
+  <div class="polaroid" aria-hidden="true"
+       [style.top.%]="bean.top" [style.left.%]="bean.left" [style.--rotate]="bean.rotate + 'deg'">
+    <img [src]="bean.src" alt="" />
+  </div>
+}

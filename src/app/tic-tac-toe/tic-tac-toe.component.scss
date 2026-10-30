@@ -1,46 +1,181 @@
-.container {
-    text-align: center;
+:host {
+  display: block;
+}
+
+.game {
+  text-align: center;
+  height: 100%;
+}
+
+.scoreboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 16px auto 0;
+  max-width: 320px;
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 4px;
+  border-radius: var(--radius-sm);
+  background: var(--foam);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--mocha);
+
+  img {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    object-fit: cover;
   }
-  
-  .board {
-    display: grid;
-    grid-template-columns: repeat(3, 100px);
-    grid-template-rows: repeat(3, 100px);
-    gap: 5px;
-    margin: 20px auto;
-    width: max-content;
+
+  strong {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--espresso);
+    letter-spacing: 0;
   }
-  
-  .cell {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f3f3f3;
-    border: 1px solid #ddd;
-    font-size: 2em;
-    cursor: pointer;
-    position: relative;
+}
+
+.opponent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 18px auto 0;
+  max-width: 320px;
+  min-height: 56px;
+}
+
+.opponent-avatar {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--latte);
+
+  &.thinking {
+    animation: bob 600ms ease-in-out infinite;
   }
-  
-  .cell img {
-    width: 80%;
-    height: 80%;
+}
+
+@keyframes bob {
+  50% {
+    transform: translateY(-4px) rotate(-6deg);
   }
-  
-  .player {
-    background-color: #d9f7be;
+}
+
+.taunt {
+  position: relative;
+  margin: 0;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  background: #fde7ec;
+  color: #8a2c43;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-align: left;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -7px;
+    top: 50%;
+    margin-top: -7px;
+    border: 7px solid transparent;
+    border-left: 0;
+    border-right-color: #fde7ec;
   }
-  
-  .program {
-    background-color: #ffd3d3;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 18px auto 0;
+  width: min(100%, 300px);
+}
+
+.cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--foam);
+  box-shadow: inset 0 -4px 0 var(--latte);
+  cursor: pointer;
+  transition: transform 120ms ease, background-color 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+
+  &:hover:not(.disabled):not(.player):not(.program) {
+    transform: translateY(-3px);
+    background: #fbf2e5;
   }
-  
-  .result {
-    font-size: 1.5em;
-    margin-top: 20px;
+
+  &.disabled {
+    cursor: default;
   }
-  
-  button {
-    padding: 10px 20px;
-    font-size: 1em;
+
+  img {
+    width: 72%;
+    height: 72%;
+    object-fit: contain;
+    mix-blend-mode: multiply; // drops the photos' white backgrounds onto the tile
+    animation: place 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
+}
+
+@keyframes place {
+  from {
+    transform: scale(0);
+  }
+}
+
+.player {
+  background: #e8f0df;
+  box-shadow: inset 0 -4px 0 #c9dbb9;
+}
+
+.program {
+  background: #fbe4e6;
+  box-shadow: inset 0 -4px 0 #f1c3c9;
+}
+
+.win {
+  background: #ffe9b8;
+  box-shadow: inset 0 -4px 0 var(--caramel), 0 0 0 3px var(--caramel);
+  animation: glow 900ms ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  to {
+    transform: scale(1.04);
+  }
+}
+
+.result {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 16px 0 12px;
+  min-height: 1.4em;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 200ms ease, transform 200ms ease;
+
+  &.visible {
+    opacity: 1;
+    transform: none;
+  }
+}
