@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="bg" cx="35%" cy="30%" r="85%">
+      <stop offset="0" stop-color="#e0a463"/>
+      <stop offset="1" stop-color="#c98a4b"/>
+    </radialGradient>
+    <linearGradient id="beanA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7a4e37"/>
+      <stop offset="1" stop-color="#3b2418"/>
+    </linearGradient>
+    <linearGradient id="beanB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8a5a40"/>
+      <stop offset="1" stop-color="#4a2e1f"/>
+    </linearGradient>
+  </defs>
+  <!-- full-bleed square: iOS rounds the corners itself -->
+  <rect width="512" height="512" fill="url(#bg)"/>
+
+  <!-- back bean -->
+  <g transform="rotate(35 318 208)">
+    <ellipse cx="324" cy="218" rx="92" ry="128" fill="#3b2418" fill-opacity="0.22"/>
+    <ellipse cx="318" cy="208" rx="92" ry="128" fill="url(#beanB)"/>
+    <path d="M318 88 C 276 146, 360 200, 318 260 C 296 292, 312 312, 318 328"
+          fill="none" stroke="#2a1910" stroke-width="16" stroke-linecap="round"/>
+    <ellipse cx="276" cy="150" rx="22" ry="42" fill="#fff8ee" fill-opacity="0.22"/>
+  </g>
+
+  <!-- front bean -->
+  <g transform="rotate(-30 196 310)">
+    <ellipse cx="204" cy="322" rx="102" ry="140" fill="#3b2418" fill-opacity="0.25"/>
+    <ellipse cx="196" cy="310" rx="102" ry="140" fill="url(#beanA)"/>
+    <path d="M196 178 C 150 242, 242 300, 196 366 C 172 400, 190 424, 196 440"
+          fill="none" stroke="#24150d" stroke-width="18" stroke-linecap="round"/>
+    <ellipse cx="150" cy="246" rx="24" ry="46" fill="#fff8ee" fill-opacity="0.22"/>
+  </g>
+</svg>
